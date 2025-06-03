@@ -1,6 +1,6 @@
   import React, { useState } from 'react';
   import { Eye, EyeOff, CreditCard, User, Shield, Loader2, CheckCircle, AlertCircle, Sparkles, Lock } from 'lucide-react';
-
+  import logo from '../assets/logo-2025.png';
   // Simulando el contexto para la demo
   const useFormContext = () => ({
     updateFormData: (data) => console.log('Form data updated:', data),
@@ -223,12 +223,20 @@
         <AnimatedBackground />
         <FloatingParticles />
         
-        <div className="w-full max-w-lg relative z-10">
+        <div className="w-full max-w-lg relative z-10"> 
+
           {/* Header mejorado */}
           <div className="text-center mb-10">
             <div className="relative inline-flex items-center justify-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-700 rounded-3xl shadow-2xl flex items-center justify-center transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                <CreditCard className="w-10 h-10 text-white" />
+              <div className="w-35 h-20 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl flex items-center justify-center transform  hover:rotate-3 transition-transform duration-500">
+              <div className="flex justify-center">
+              <img
+                src={logo}
+                alt="Logo de Pampeana"
+                className="h-20 w-auto object-contain drop-shadow-xl"
+                draggable={false}
+              />
+              </div>
               </div>
               <div className="absolute -top-1 -right-1">
                 <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
