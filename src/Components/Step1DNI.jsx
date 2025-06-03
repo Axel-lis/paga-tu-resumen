@@ -1,6 +1,6 @@
   import React, { useState } from 'react';
   import { Eye, EyeOff, CreditCard, User, Shield, Loader2, CheckCircle, AlertCircle, Sparkles, Lock } from 'lucide-react';
-  import logo from '../assets/logo-2025.png';
+  import logo from '../assets/logo-mobile.png';
   // Simulando el contexto para la demo
   const useFormContext = () => ({
     updateFormData: (data) => console.log('Form data updated:', data),
@@ -229,7 +229,7 @@
           <div className="text-center mb-10">
             <div className="relative inline-flex items-center justify-center mb-6">
               <div className="w-35 h-20 bg-gradient-to-br from-blue-500 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl flex items-center justify-center transform  hover:rotate-3 transition-transform duration-500">
-              <div className="flex justify-center">
+              <div className="flex justify-center p-2">
               <img
                 src={logo}
                 alt="Logo de Pampeana"
