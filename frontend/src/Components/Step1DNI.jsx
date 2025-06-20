@@ -1,11 +1,8 @@
   import React, { useState } from 'react';
+  import { useNavigate } from 'react-router-dom';
   import { Eye, EyeOff, CreditCard, User, Shield, Loader2, CheckCircle, AlertCircle, Sparkles, Lock } from 'lucide-react';
   import logo from '../assets/logo-mobile.png';
-  // Simulando el contexto para la demo
-  const useFormContext = () => ({
-    updateFormData: (data) => console.log('Form data updated:', data),
-    setStep: (stepFn) => console.log('Step updated:', stepFn(1))
-  });
+  import { useFormContext } from '../context/FormContext';
 
   // Validación personalizada
   const validateField = {
@@ -15,8 +12,8 @@
       return null;
     },
     tarjeta: (value) => {
-      if (!value) return 'El número de tarjeta es requerido';
-      if (!/^\d{16}$/.test(value)) return 'Debe contener exactamente 16 dígitos';
+      if (!value) return 'Los últimos 4 números de tu tarjeta son requeridos';
+      if (!/^\d{4}$/.test(value)) return 'Debe contener exactamente 4 dígitos';
       return null;
     },
     captcha: (value) => {
@@ -25,6 +22,8 @@
       return null;
     }
   };
+
+
 
   const AnimatedBackground = () => (
     <div className="absolute inset-0 overflow-hidden">
@@ -152,6 +151,9 @@
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitAttempted, setSubmitAttempted] = useState(false);
 
+    //inicializamos el hook de navigate 
+    const navigate = useNavigate();
+
     const formatCardNumber = (value) => {
       return value.replace(/\s/g, '').replace(/(.{4})/g, '$1 ').trim();
     };
@@ -165,7 +167,7 @@
       if (field === 'dni') {
         formattedValue = formatDNI(value);
       } else if (field === 'tarjeta') {
-        formattedValue = value.replace(/\s/g, '').replace(/\D/g, '').slice(0, 16);
+        formattedValue = value.replace(/\s/g, '').replace(/\D/g, '').slice(0, 4);
       } else if (field === 'captcha') {
         formattedValue = value.replace(/\D/g, '').slice(0, 2);
       }
@@ -219,10 +221,11 @@
       
         updateFormData({
           ...formData,
-          resumen: data.resumen
+          resumen: data.resumen,
         });
-      
         setStep((prev) => prev + 1);
+        navigate('/step2');  //pasa el step2 si todo está bien
+
       } catch (err) {
         alert(err.message); // Podés usar un modal lindo o toast
       } finally {
@@ -286,10 +289,10 @@
 
               <InputField
                 name="tarjeta"
-                label="Número de Tarjeta"
+                label="Últimos 4 números de tu Tarjeta"
                 icon={CreditCard}
-                placeholder="1234 5678 9012 3456"
-                maxLength="19"
+                placeholder="0912"
+                maxLength="4"
                 value={showCardNumber ? formatCardNumber(formData.tarjeta) : formData.tarjeta}
                 onChange={(e) => handleChange('tarjeta', e.target.value)}
                 onBlur={() => handleBlur('tarjeta')}

@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CreditCard, Shield, DollarSign, CheckCircle, Sparkles, Lock, Loader2, Clock, Star, Zap } from 'lucide-react';
-
-// Simulando el contexto para la demo
-const useFormContext = () => ({
-  formData: {
-    resumen: {
-      importe: 14500.75
-    }
-  },
-  next: () => console.log('Next step'),
-  back: () => console.log('Back step')
-});
+import { useFormContext } from '../context/FormContext';
 
 const AnimatedBackground = () => (
   <div className="absolute inset-0 overflow-hidden">
@@ -53,7 +43,7 @@ const PaymentMethodCard = ({ icon: Icon, title, description, selected, onClick, 
     {premium && (
       <div className="absolute -top-3 -right-3">
         <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
-          PREMIUM
+          RECOMENDADO
         </div>
       </div>
     )}
@@ -211,8 +201,8 @@ export const Step3Pago = () => {
             <div className="grid gap-4">
               <PaymentMethodCard
                 icon={CreditCard}
-                title="Tarjeta de Crédito/Débito"
-                description="Pago inmediato y seguro con tu tarjeta"
+                title="Pagá con Mercado Pago"
+                description="Pago inmediato y seguro con tu billetera virtual"
                 selected={selectedMethod === 'tarjeta'}
                 onClick={() => setSelectedMethod('tarjeta')}
                 premium={true}
@@ -220,8 +210,8 @@ export const Step3Pago = () => {
               
               <PaymentMethodCard
                 icon={Clock}
-                title="Transferencia Bancaria"
-                description="Pago mediante transferencia (demora 24-48hs)"
+                title="Pagá con otras billeteras Virtuales"
+                description="xxxxxxx"
                 selected={selectedMethod === 'transferencia'}
                 onClick={() => setSelectedMethod('transferencia')}
               />

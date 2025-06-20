@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, CreditCard, Calendar, DollarSign, CheckCircle, Sparkles, Lock, AlertCircle, ChevronRight } from 'lucide-react';
-
-// Simulando el contexto para la demo
-const useFormContext = () => ({
-  formData: {
-    resumen: {
-      importe: 14500.75,
-      vencimiento: '2025-06-10'
-    }
-  },
-  next: () => console.log('Next step'),
-  back: () => console.log('Back step')
-});
-
+import { useNavigate } from 'react-router-dom';
+import { useFormContext } from '../context/FormContext';
 const AnimatedBackground = () => (
   <div className="absolute inset-0 overflow-hidden">
     <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/30 rounded-full blur-3xl animate-pulse"></div>
@@ -90,7 +79,17 @@ const ResumenCard = ({ icon: Icon, label, value, highlight = false, prefix = '',
 };
 
 export const Step2Resumen = () => {
-  const { formData, next, back } = useFormContext();
+  const { formData, setStep } = useFormContext();
+  const navigate = useNavigate();
+  
+  const next = () => {
+    setStep(3);
+    navigate('/step3');
+  };
+  
+  const back = () => navigate('/step1');
+  
+  
   const resumen = formData.resumen;
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -98,15 +97,17 @@ export const Step2Resumen = () => {
     const timer = setTimeout(() => setShowSuccess(true), 500);
     return () => clearTimeout(timer);
   }, []);
-
+  
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(year, month - 1, day); // Usa mes base 0
     return date.toLocaleDateString('es-AR', {
       day: '2-digit',
       month: 'long',
       year: 'numeric'
     });
   };
+  
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-AR', {
