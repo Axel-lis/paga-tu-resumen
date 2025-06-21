@@ -3,7 +3,7 @@
   import { Eye, EyeOff, CreditCard, User, Shield, Loader2, CheckCircle, AlertCircle, Sparkles, Lock } from 'lucide-react';
   import logo from '../assets/logo-mobile.png';
   import { useFormContext } from '../context/FormContext';
-
+  import Swal from 'sweetalert2'
   // Validación personalizada
   const validateField = {
     dni: (value) => {
@@ -227,7 +227,12 @@
         navigate('/step2');  //pasa el step2 si todo está bien
 
       } catch (err) {
-        alert(err.message); // Podés usar un modal lindo o toast
+        Swal.fire({
+          title: 'Error al procesar el pago',
+          text: err.message,
+          icon: 'info',
+          confirmButtonText: 'OK'
+        })
       } finally {
         setIsSubmitting(false);
       }

@@ -54,6 +54,20 @@ export const verificarResumen = async (req, res, next) => {
 
     const { imprsactp } = r1Rows[0];
 
+
+    // Verificar si el resumen no presenta deuda (monto = 0)
+    if (imprsactp === 0 || imprsactp < 0) {
+      return res.json({ 
+        success: true, 
+        alert: 'El resumen no presenta deuda pendiente.',
+        resumen: {
+          numeroResumen: numrresmn,
+          vencimiento: fechvactl,
+          importe: imprsactp,
+        }
+      });
+    }
+
     // Preparar el resumen final con todos los datos obtenidos
     const resumen = {
       numeroResumen: numrresmn,

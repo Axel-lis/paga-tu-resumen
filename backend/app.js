@@ -23,7 +23,7 @@ app.use('/api/step1', step1Router);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
-    error: err.message || 'Error interno del servidor',
+    error: err.message || 'En este momento nuestros servidores no pueden procesar el pedido, intente nuevamente en un momento.',
   });
 });
 
